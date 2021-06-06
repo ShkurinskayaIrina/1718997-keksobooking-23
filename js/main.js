@@ -5,7 +5,6 @@ const getRandomIntNumber = function(minNumber,maxNumber){
     maxNumber=buff;
   }
   const rendomNumber=Math.floor(Math.random()*(maxNumber-minNumber+1)+minNumber);
-  console.log(rendomNumber);
   return rendomNumber;
 };
 getRandomIntNumber(1,30);
