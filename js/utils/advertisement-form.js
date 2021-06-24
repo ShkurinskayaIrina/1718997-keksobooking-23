@@ -3,7 +3,9 @@ const MAX_HEADER_LENGTH = 100;
 const MAX_PRICE_NIGHT = 1000000;
 
 
-const headerInput = document.querySelector('#title');
+const noticeBlock = document.querySelector('.notice');
+
+const headerInput = noticeBlock.querySelector('#title');
 headerInput.addEventListener('input',()=>{
   const valueLength = headerInput.value.length;
   if (valueLength<MIN_HEADER_LENGTH){
@@ -16,7 +18,7 @@ headerInput.addEventListener('input',()=>{
   headerInput.reportValidity();
 });
 
-const priceInput = document.querySelector('#price');
+const priceInput = noticeBlock.querySelector('#price');
 priceInput.addEventListener('input',()=>{
   if (priceInput.value>MAX_PRICE_NIGHT){
     priceInput.setCustomValidity('Максимально возможная цена за ночь - 1 000 000 руб.');
@@ -26,8 +28,8 @@ priceInput.addEventListener('input',()=>{
   priceInput.reportValidity();
 });
 
-const rooms = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
+const rooms = noticeBlock.querySelector('#room_number');
+const capacity = noticeBlock.querySelector('#capacity');
 const capacityList = capacity.querySelectorAll('option');
 
 rooms.addEventListener('change',()=>{
@@ -50,8 +52,49 @@ rooms.addEventListener('change',()=>{
   }
 });
 
-// capacity количество гостей
-// 1 комната — «для 1 гостя»;
-// 2 комнаты — «для 2 гостей» или «для 1 гостя»;
-// 3 комнаты — «для 3 гостей», «для 2 гостей» или «для 1 гостя»;
-// 100 комнат — «не для гостей».
+const typeHousing = noticeBlock.querySelector('#type');
+const priceNight = noticeBlock.querySelector('#price');
+let minPriceNight = 1000;
+
+const checkTypeHousing = function(){
+  if (typeHousing.value==='bungalow'){
+    minPriceNight = 0;
+  } else if (typeHousing.value==='flat'){
+    minPriceNight=1000;
+  } else if(typeHousing.value==='hotel'){
+    minPriceNight=3000;
+  } else if(typeHousing.value==='house'){
+    minPriceNight=5000;
+  } else if(typeHousing.value==='palace'){
+    minPriceNight=10000;
+  }
+  priceNight.placeholder=minPriceNight;
+  priceNight.min=minPriceNight;
+};
+
+const checkPriceNight = function(){
+  if (priceNight.value<minPriceNight){
+    priceNight.setCustomValidity(`Минимально возможная цена за ночь - ${minPriceNight} руб.`);
+  } else {
+    priceNight.setCustomValidity('');
+  }
+  priceNight.reportValidity();
+};
+
+
+typeHousing.addEventListener('change',()=>{
+  checkTypeHousing();
+
+  checkPriceNight();
+});
+
+priceNight.addEventListener('input',()=>{
+  checkPriceNight();
+});
+
+const timeIn = noticeBlock.querySelector('#timein');
+const timeOut = noticeBlock.querySelector('#timeout');
+timeIn.addEventListener('change',()=>{
+  timeOut.value=timeIn.value;
+//не пойму, надо ли блокировать выбор другого значения в timeOut?
+});
