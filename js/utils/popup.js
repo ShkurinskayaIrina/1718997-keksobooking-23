@@ -13,20 +13,27 @@ const newAdvertisement = createAdvertisement();
 //console.log(Object.keys(newAdvertisement).length);
 //};
 //функция для скрытия блока в случае отстуствия данных. Пока не доработана
-const addClass = function(element1,element2){
-  if (element1===''){
-    element2.classList.add('hidden');
-  }
-};
-addClass(newAdvertisement.offer.title,advertisementElement.querySelector('.popup__title'));
+// const addClass = function(element1,element2){
+//   if (element1===''){
+//     element2.classList.add('hidden');
+//   }
+// };
+//addClass(newAdvertisement.offer.title,advertisementElement.querySelector('.popup__title'));
 
-//advertisementElement.querySelector('.popup__title').textContent = newAdvertisement.offer.title;
+advertisementElement.querySelector('.popup__title').textContent = newAdvertisement.offer.title;
 advertisementElement.querySelector('.popup__text--address').textContent =newAdvertisement.offer.address;
 advertisementElement.querySelector('.popup__text--price').textContent =`${newAdvertisement.offer.price} ₽/ночь`;
 advertisementElement.querySelector('.popup__type').textContent = newAdvertisement.offer.type;
 advertisementElement.querySelector('.popup__text--capacity').textContent = `${newAdvertisement.offer.rooms} комнаты для ${newAdvertisement.offer.guests} гостей`;
 advertisementElement.querySelector('.popup__text--time').textContent = `Заезд после ${newAdvertisement.offer.checkin}, выезд до ${newAdvertisement.offer.checkin}`;
-advertisementElement.querySelector('.popup__features').textContent = newAdvertisement.offer.features;
+
+const featureListElement = advertisementElement.querySelectorAll('.popup__feature');
+const modifiersFeatures = newAdvertisement.offer.features.map((feature) => `popup__feature--${feature}`);
+featureListElement.forEach((item)=>{
+  const modifier = item.classList[1];
+  if (!modifiersFeatures.includes(modifier)){item.remove();}
+});
+
 advertisementElement.querySelector('.popup__description').textContent = newAdvertisement.offer.description;
 
 const popupPhotos = advertisementElement.querySelector('.popup__photos');

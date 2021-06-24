@@ -46,7 +46,7 @@ const createAdvertisement =function(){
       avatar:`img/avatars/user0${getRandomPositive(1,8)}.png`,
     },
     offer : {
-      title : '',//'Уютная квартира для семейного отдыха',
+      title : 'Уютная квартира для семейного отдыха',
       address : (`${locationLat},${locationLng}`),
       price : getRandomPositive(1,10000),
       type : TYPE_OFFER[Object.keys(TYPE_OFFER)[getRandomPositive(0,4)]],
