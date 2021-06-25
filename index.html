@@ -24,7 +24,7 @@
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
         <form action="#" class="map__filters" autocomplete="off">
-          <select name="housing-type" id="housing-type" class="map__filter">
+          <select name="housing-type" id="housing-type" class="map__filter" >
             <option value="any" selected>Любой тип жилья</option>
             <option value="bungalow">Бунгало</option>
             <option value="flat">Квартира</option>
@@ -71,7 +71,7 @@
     <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title" >Ваше объявление</h2>
-      <form class="ad-form" method="post"  enctype="multipart/form-data" autocomplete="off" action="https://23.javascript.pages.academy/keksobooking"
+      <form class="ad-form" method="post" enctype="multipart/form-data" autocomplete="off" action="https://23.javascript.pages.academy/keksobooking"
         <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">
@@ -95,7 +95,7 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
-          <select id="type" name="type">
+          <select id="type" name="type" >
             <option value="bungalow">Бунгало</option>
             <option value="flat" selected>Квартира</option>
             <option value="hotel">Отель</option>
@@ -105,7 +105,7 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price" >Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000"  max=1000000 step=500 required>
+          <input id="price" name="price" type="number" placeholder="1000"  max=1000000 value=1000 required>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
