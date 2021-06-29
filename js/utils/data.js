@@ -38,12 +38,27 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+const AVATARS = [];
+
+
 const createAdvertisement =function(){
   const locationLat = getRandomPositive(35.65000,35.70000,5);
   const locationLng = getRandomPositive(139.70000,139.80000,5);
+
+  let numberAvatar = getRandomPositive(1,11);
+  while (AVATARS.includes(numberAvatar)){
+    numberAvatar = getRandomPositive(1,11);
+  }
+  AVATARS.push(numberAvatar);
+  const avatar =  numberAvatar <10 ? `img/avatars/user0${numberAvatar}.png` :`img/avatars/user${numberAvatar}.png` ;
+
+  const photosAdvertisement = new Array(getRandomPositive(1,4)).fill(null).map(()=>getRandomArrayElement(PHOTOS));
+
+  const filteredPhotosAdvertisement = photosAdvertisement.filter((item, index) => photosAdvertisement.indexOf(item) === index);
+
   return {
     author : {
-      avatar:`img/avatars/user0${getRandomPositive(1,8)}.png`,
+      avatar: avatar,
     },
     offer : {
       title : 'Уютная квартира для семейного отдыха',
@@ -56,7 +71,7 @@ const createAdvertisement =function(){
       checkout : getRandomArrayElement(CHECK),
       features : new Array(getRandomPositive(1,6)).fill(null).map(()=>getRandomArrayElement(FEATURES)),
       description :'Самое лучше жилье',
-      photos : new Array(getRandomPositive(1,3)).fill(null).map(()=>getRandomArrayElement(PHOTOS)),
+      photos : filteredPhotosAdvertisement,
     },
     location : {
       lat : locationLat,
