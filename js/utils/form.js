@@ -1,3 +1,4 @@
+
 const formAd = document.querySelector('.ad-form');
 const fieldsetAdd = formAd.querySelectorAll('fieldset');
 
@@ -20,7 +21,9 @@ const removeFormDisabled = function(){
   mapFilter.classList.remove('ad-form--disabled');
   selectFilter.forEach((element)=>element.disabled=false);
   fieldsetFilter.disabled=false;
-}
+};
 
 addFormDisabled();
-removeFormDisabled();
+//removeFormDisabled();
+
+export {removeFormDisabled};

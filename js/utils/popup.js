@@ -1,53 +1,82 @@
-import {createAdvertisement} from './data.js';
+const setAvailability = function(element , block){
+  if (!element){
+    return block.classList.add('hidden');
+  }
+  if (block.textContent){
+    return block.textContent = element;
+  }
+  return block.src = element;
+};
 
-const advertisementListElement = document.querySelector('#map-canvas');
-const advertisementTemplate = document.querySelector('#card').content.querySelector('.popup');
-const advertisementElement = advertisementTemplate.cloneNode(true);
-const fragment = document.createDocumentFragment();
-const newAdvertisement = createAdvertisement();
+const setFeatures = function(elements , block){
+  block.forEach((item)=>{
+    const modifier = item.classList[1];
+    if (!elements.includes(modifier)){item.remove();}
+  });
+};
 
-//console.log(newAdvertisement,newAdvertisement.length);
+const setPhoto = function(elements , block, blockPresent){
+  if (!elements){
+    return block.classList.add('hidden');
+  }
+  elements.forEach((value , index)=> {
+    let photoNew = '';
+    index>0 ? photoNew = document.createElement('img') : photoNew = blockPresent;
+    photoNew.src=value;
+    photoNew.classList.add('popup__photo');
+    photoNew.style.width=`${45}px`;
+    photoNew.style.height=`${40}px`;
+    block.appendChild(photoNew);
+  });
+};
 
-//for (let i=0; i<newAdvertisement[Object.keys(newAdvertisement).length]];i++){
-// console.log(newAdvertisement[Object.keys(newAdvertisement).length]);
-//console.log(Object.keys(newAdvertisement).length);
-//};
-//функция для скрытия блока в случае отстуствия данных. Пока не доработана
-// const addClass = function(element1,element2){
-//   if (element1===''){
-//     element2.classList.add('hidden');
-//   }
-// };
-//addClass(newAdvertisement.offer.title,advertisementElement.querySelector('.popup__title'));
+const createPopup = function(advertisement){
+  const advertisementTemplate = document.querySelector('#card').content.querySelector('.popup');
+  const advertisementElement = advertisementTemplate.cloneNode(true);
+  const avatar = advertisement.author.avatar;
+  const popupAvatar = advertisementElement.querySelector('.popup__avatar');
 
-advertisementElement.querySelector('.popup__title').textContent = newAdvertisement.offer.title;
-advertisementElement.querySelector('.popup__text--address').textContent =newAdvertisement.offer.address;
-advertisementElement.querySelector('.popup__text--price').textContent =`${newAdvertisement.offer.price} ₽/ночь`;
-advertisementElement.querySelector('.popup__type').textContent = newAdvertisement.offer.type;
-advertisementElement.querySelector('.popup__text--capacity').textContent = `${newAdvertisement.offer.rooms} комнаты для ${newAdvertisement.offer.guests} гостей`;
-advertisementElement.querySelector('.popup__text--time').textContent = `Заезд после ${newAdvertisement.offer.checkin}, выезд до ${newAdvertisement.offer.checkin}`;
+  const title = advertisement.offer.title;
+  const popupTitle = advertisementElement.querySelector('.popup__title');
 
-const featureListElement = advertisementElement.querySelectorAll('.popup__feature');
-const modifiersFeatures = newAdvertisement.offer.features.map((feature) => `popup__feature--${feature}`);
-featureListElement.forEach((item)=>{
-  const modifier = item.classList[1];
-  if (!modifiersFeatures.includes(modifier)){item.remove();}
-});
+  const address = advertisement.offer.address;
+  const popupTextAddress = advertisementElement.querySelector('.popup__text--address');
 
-advertisementElement.querySelector('.popup__description').textContent = newAdvertisement.offer.description;
+  const price = `${advertisement.offer.price} ₽/ночь`;
+  const popupTextPrice = advertisementElement.querySelector('.popup__text--price');
 
-const popupPhotos = advertisementElement.querySelector('.popup__photos');
-newAdvertisement.offer.photos.forEach((value,index)=> {
-  let photoNew = '';
-  index>0 ? photoNew = document.createElement('img') : photoNew = advertisementElement.querySelector('.popup__photo');
-  photoNew.src=value;
-  photoNew.classList.add('popup__photo');
-  //photoNew.classList.add('hidden');
-  photoNew.style.width=`${45}px`;
-  photoNew.style.height=`${40}px`;
-  popupPhotos.appendChild(photoNew);
-});
+  const type = advertisement.offer.type;
+  const popupType = advertisementElement.querySelector('.popup__type');
 
-advertisementElement.querySelector('.popup__avatar').src = newAdvertisement.author.avatar;
-fragment.appendChild(advertisementElement);
-advertisementListElement.appendChild(fragment);
+  const capacity = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
+  const popupTextCapacity = advertisementElement.querySelector('.popup__text--capacity');
+
+  const textTime = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkin}`;
+  const popupTextTime = advertisementElement.querySelector('.popup__text--time');
+
+  const description = advertisement.offer.description;
+  const popupDescription = advertisementElement.querySelector('.popup__description');
+
+  const popupFeatureList = advertisementElement.querySelectorAll('.popup__feature');
+  const  modifiersFeatures = advertisement.offer.features.map((feature) => `popup__feature--${feature}`);
+
+  const photos = advertisement.offer.photos;
+  const popupPhotos = advertisementElement.querySelector('.popup__photos');
+  const popupPhoto = advertisementElement.querySelector('.popup__photo');
+
+  setAvailability(avatar,popupAvatar);
+  setAvailability(title , popupTitle);
+  setAvailability(address , popupTextAddress);
+  setAvailability(price , popupTextPrice);
+  setAvailability(type , popupType);
+  setAvailability(capacity , popupTextCapacity);
+  setAvailability(textTime , popupTextTime);
+  setAvailability(description , popupDescription);
+
+  setFeatures(modifiersFeatures,popupFeatureList);
+  setPhoto(photos, popupPhotos, popupPhoto);
+
+  return advertisementElement;
+};
+
+export {createPopup};
