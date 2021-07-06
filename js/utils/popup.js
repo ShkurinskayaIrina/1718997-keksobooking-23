@@ -1,3 +1,11 @@
+const TYPE_OFFER = {
+  palace : 'Дворец',
+  flat : 'Квартира',
+  house : 'Дом',
+  bungalow :'Бунгало',
+  hotel : 'Отель',
+};
+
 const setAvailability = function(element , block){
   if (!element){
     return block.classList.add('hidden');
@@ -5,6 +13,7 @@ const setAvailability = function(element , block){
   if (block.textContent){
     return block.textContent = element;
   }
+
   return block.src = element;
 };
 
@@ -16,9 +25,6 @@ const setFeatures = function(elements , block){
 };
 
 const setPhoto = function(elements , block, blockPresent){
-  if (!elements){
-    return block.classList.add('hidden');
-  }
   elements.forEach((value , index)=> {
     let photoNew = '';
     index>0 ? photoNew = document.createElement('img') : photoNew = blockPresent;
@@ -45,20 +51,27 @@ const createPopup = function(advertisement){
   const price = `${advertisement.offer.price} ₽/ночь`;
   const popupTextPrice = advertisementElement.querySelector('.popup__text--price');
 
-  const type = advertisement.offer.type;
+  const type = TYPE_OFFER[advertisement.offer.type];
   const popupType = advertisementElement.querySelector('.popup__type');
 
-  const capacity = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
+  let capacityText = ' комнат для ';
+  if (advertisement.offer.rooms===1){
+    capacityText=' комната для ';
+  } else if (advertisement.offer.rooms>1 && advertisement.offer.rooms<5){
+    capacityText=' комнаты для ';
+  }
+
+  const capacity = `${advertisement.offer.rooms} ${capacityText} ${advertisement.offer.guests} гостей`;
   const popupTextCapacity = advertisementElement.querySelector('.popup__text--capacity');
 
-  const textTime = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkin}`;
+  const textTime = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkout}`;
   const popupTextTime = advertisementElement.querySelector('.popup__text--time');
 
   const description = advertisement.offer.description;
   const popupDescription = advertisementElement.querySelector('.popup__description');
 
+  const popupFeatureBlock = advertisementElement.querySelector('.popup__features');
   const popupFeatureList = advertisementElement.querySelectorAll('.popup__feature');
-  const  modifiersFeatures = advertisement.offer.features.map((feature) => `popup__feature--${feature}`);
 
   const photos = advertisement.offer.photos;
   const popupPhotos = advertisementElement.querySelector('.popup__photos');
@@ -73,8 +86,17 @@ const createPopup = function(advertisement){
   setAvailability(textTime , popupTextTime);
   setAvailability(description , popupDescription);
 
-  setFeatures(modifiersFeatures,popupFeatureList);
-  setPhoto(photos, popupPhotos, popupPhoto);
+
+  let  modifiersFeatures='';
+  if (advertisement.offer.features){
+    modifiersFeatures = advertisement.offer.features.map((feature) => `popup__feature--${feature}`);
+    setFeatures(modifiersFeatures,popupFeatureList);
+  } else {popupFeatureBlock.classList.add('hidden');}
+
+  if (photos){
+    setPhoto(photos, popupPhotos, popupPhoto);
+  } else {popupPhotos.classList.add('hidden');}
+
 
   return advertisementElement;
 };

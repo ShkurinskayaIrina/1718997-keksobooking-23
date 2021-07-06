@@ -86,7 +86,6 @@ const timeOut = noticeBlock.querySelector('#timeout');
 
 const onTimeInChange = function(){
   timeOut.value=timeIn.value;
-//не пойму, надо ли блокировать выбор другого значения в timeOut?
 };
 
 

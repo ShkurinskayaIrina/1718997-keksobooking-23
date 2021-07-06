@@ -1,19 +1,25 @@
 //модуль с вспомогательными функциями
-//import {TYPE_OFFER,CHECK,FEATURES,PHOTOS} from './data.js';
+const ALERT_SHOW_TIME = 5000;
 
-const getRandomPositive = function(count1,count2,countOfDecimals=0){
-  const lower = Math.ceil(Math.min(Math.abs(count1), Math.abs(count2)));
-  const upper = Math.floor(Math.max(Math.abs(count1), Math.abs(count2)));
-  let result=0;
-  if (countOfDecimals!==0){
-    result = Math.random() * (upper - lower) + lower;
-    return result.toFixed(countOfDecimals);
-  }
-  result = Math.random() * (upper - lower+1) + lower;
-  return Math.floor(result);
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.textContent = message;
+  document.body.append(alertContainer);
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomPositive(0, elements.length - 1)];
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export {getRandomPositive, getRandomArrayElement};
-
+export {showAlert};
+export {isEscEvent};
