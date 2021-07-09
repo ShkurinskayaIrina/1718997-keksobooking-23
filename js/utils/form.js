@@ -6,6 +6,9 @@ const fieldsetAdd = formAd.querySelectorAll('fieldset');
 const bodyBlock = document.querySelector('body');
 
 const mapFilter = document.querySelector('.map__filters');
+// const HousingTypeFilter = mapFilter.querySelector('[name="housing-type"]');
+// const checkboxFilters = mapFilter.querySelectorAll('[type="checkbox"]');
+
 const selectFilter = mapFilter.querySelectorAll('select');
 const fieldsetFilter = mapFilter.querySelector('fieldset');
 
@@ -66,11 +69,8 @@ const showErrorMessage = function (){
 
   bodyBlock.appendChild(errorMessage);
   document.addEventListener('click',onBlockClick);
-  // document.addEventListener('keydown',onBlockEscKeydown);
+  document.addEventListener('keydown',onBlockEscKeydown);
   buttonError.addEventListener('click',onBlockClick);
 };
-
-
-
 
 export {removeFormDisabled, formAd, showSuccessMessage, showErrorMessage};

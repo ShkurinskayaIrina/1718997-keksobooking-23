@@ -1,14 +1,18 @@
 import './utils/popup.js';
 import './utils/advertisement-form.js';
-import './utils/form.js';
-import {createMarker,formAdSubmit, addAdvertisement} from './utils/map.js';
+import {createMarker,formAdSubmit, addAdvertisement}  from './utils/map.js';
+import {setHousingTypeClick, setHousingPriceClick, SetHousingRoomsClick, SetHousingGuestsClick,SetHousingFeaturesClick} from './utils/map.js';
 import {getData} from './utils/api.js';
-
-
-const SIMILAR_ADVERTISEMENT_COUNT = 10;
+import {debounce} from './debounce.js';
+const RERENDER_DELAY = 500;
 
 getData((advertisements) => {
-  createMarker(advertisements.slice(0,SIMILAR_ADVERTISEMENT_COUNT));
+  createMarker(advertisements);
+  setHousingTypeClick(() => createMarker(advertisements));
+  setHousingPriceClick(() => createMarker(advertisements));
+  SetHousingRoomsClick(() => createMarker(advertisements));
+  SetHousingGuestsClick(() => createMarker(advertisements));
+  SetHousingFeaturesClick(debounce(() => createMarker(advertisements),RERENDER_DELAY));
 });
 
 formAdSubmit(addAdvertisement);

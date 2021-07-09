@@ -6,14 +6,14 @@ const getData = (onSuccess) => {
       if (response.ok) {
         return response;
       }
-       showAlert('Не удалось загрузить данные. Перезагрузите страницу');
+      showAlert('Не удалось загрузить данные. Перезагрузите страницу');
     })
     .then((response) => response.json())
     .then((advertisements) => onSuccess(advertisements))
     .catch(() => showAlert('Не удалось загрузить данные. Перезагрузите страницу'));
 };
 
-  const sendData = function(onSuccess, onFail, body){
+const sendData = function(onSuccess, onFail, body){
   fetch('https://23.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
