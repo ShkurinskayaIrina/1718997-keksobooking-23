@@ -8,7 +8,7 @@ const TYPE_OFFER = {
 
 const setAvailability = function(element , block){
   if (!element){
-    return block.classList.add('hidden');
+     return block.classList.add('hidden');
   }
   if (block.textContent){
     return block.textContent = element;

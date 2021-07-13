@@ -1,15 +1,10 @@
-import './utils/popup.js';
-import './utils/advertisement-form.js';
-import './utils/form.js';
-import {createMarker,formAdSubmit, addAdvertisement} from './utils/map.js';
+import { showAlert } from './utils/util.js';
+import {formAdSubmit, addAdvertisement}  from './utils/map.js';
+import { setFiltersClick } from './utils/map.js';
 import {getData} from './utils/api.js';
 
-
-const SIMILAR_ADVERTISEMENT_COUNT = 10;
-
-getData((advertisements) => {
-  createMarker(advertisements.slice(0,SIMILAR_ADVERTISEMENT_COUNT));
-});
+getData((advertisements) => setFiltersClick(advertisements),
+  () => showAlert());
 
 formAdSubmit(addAdvertisement);
 

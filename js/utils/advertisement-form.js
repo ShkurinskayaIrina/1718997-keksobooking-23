@@ -9,9 +9,18 @@ const MIN_PRICE_OF_TYPE = {
   house : 5000,
   palace : 10000,
 };
+let minPriceNight = 1000;
 
 const noticeBlock = document.querySelector('.notice');
 const headerInput = noticeBlock.querySelector('#title');
+const rooms = noticeBlock.querySelector('#room_number');
+
+const capacity = noticeBlock.querySelector('#capacity');
+const capacityList = capacity.querySelectorAll('option');
+
+const typeHousing = noticeBlock.querySelector('#type');
+const priceNight = noticeBlock.querySelector('#price');
+
 
 const onHeaderInput = function (){
   const valueLength = headerInput.value.length;
@@ -24,10 +33,6 @@ const onHeaderInput = function (){
   }
   headerInput.reportValidity();
 };
-
-const rooms = noticeBlock.querySelector('#room_number');
-const capacity = noticeBlock.querySelector('#capacity');
-const capacityList = capacity.querySelectorAll('option');
 
 const onRoomsChange = function(){
   for ( let i=0 ; i < capacityList.length; i++ ){
@@ -48,10 +53,6 @@ const onRoomsChange = function(){
     }
   }
 };
-
-const typeHousing = noticeBlock.querySelector('#type');
-const priceNight = noticeBlock.querySelector('#price');
-let minPriceNight = 1000;
 
 const checkTypeHousing = function(){
   minPriceNight= MIN_PRICE_OF_TYPE[typeHousing.value];
@@ -87,7 +88,6 @@ const timeOut = noticeBlock.querySelector('#timeout');
 const onTimeInChange = function(){
   timeOut.value=timeIn.value;
 };
-
 
 headerInput.addEventListener('input', onHeaderInput);
 priceNight.addEventListener('input', onPriceNightInput);
