@@ -1,3 +1,5 @@
+import {addPhoto} from './photo.js';
+
 const MIN_HEADER_LENGTH = 30;
 const MAX_HEADER_LENGTH = 100;
 const MAX_PRICE_NIGHT = 1000000;
@@ -9,6 +11,7 @@ const MIN_PRICE_OF_TYPE = {
   house : 5000,
   palace : 10000,
 };
+
 let minPriceNight = 1000;
 
 const noticeBlock = document.querySelector('.notice');
@@ -21,8 +24,7 @@ const capacityList = capacity.querySelectorAll('option');
 const typeHousing = noticeBlock.querySelector('#type');
 const priceNight = noticeBlock.querySelector('#price');
 
-
-const onHeaderInput = function (){
+const onHeaderInput = function () {
   const valueLength = headerInput.value.length;
   if (valueLength<MIN_HEADER_LENGTH){
     headerInput.setCustomValidity(`Поле должно состоять минимум из 30 символов. Добавьте eщё ${  MIN_HEADER_LENGTH - valueLength } симв.`);
@@ -34,7 +36,7 @@ const onHeaderInput = function (){
   headerInput.reportValidity();
 };
 
-const onRoomsChange = function(){
+const onRoomsChange = function () {
   for ( let i=0 ; i < capacityList.length; i++ ){
     if (Number(rooms.value)===100) {
       if (i===3){
@@ -54,13 +56,13 @@ const onRoomsChange = function(){
   }
 };
 
-const checkTypeHousing = function(){
+const checkTypeHousing = function () {
   minPriceNight= MIN_PRICE_OF_TYPE[typeHousing.value];
   priceNight.placeholder=minPriceNight;
   priceNight.min=minPriceNight;
 };
 
-const checkPriceNight = function(){
+const checkPriceNight = function () {
   if (priceNight.value>MAX_PRICE_NIGHT){
     priceNight.setCustomValidity('Максимально возможная цена за ночь - 1 000 000 руб.');
   } else {
@@ -73,21 +75,42 @@ const checkPriceNight = function(){
   priceNight.reportValidity();
 };
 
-const onTypeHousingChange = function(){
+const onTypeHousingChange = function () {
   checkTypeHousing();
   checkPriceNight();
 };
 
-const onPriceNightInput = function(){
+const onPriceNightInput = function () {
   checkPriceNight();
 };
 
 const timeIn = noticeBlock.querySelector('#timein');
 const timeOut = noticeBlock.querySelector('#timeout');
 
-const onTimeInChange = function(){
+const onTimeInChange = function () {
   timeOut.value=timeIn.value;
 };
+
+const onTimetimeOutChange = function () {
+  timeIn.value=timeOut.value;
+};
+
+const fileChooserPhoto = document.querySelector('#images');
+const previewPhoto = document.querySelector('.ad-form__photo');
+
+const onPhotoChange = function () {
+  addPhoto(fileChooserPhoto,previewPhoto);
+};
+
+const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
+const previewAvatar = document.querySelector('.ad-form-header__preview img');
+
+const onAvatarChange = function () {
+  addPhoto(fileChooserAvatar,previewAvatar);
+};
+
+fileChooserPhoto.addEventListener('change',onPhotoChange);
+fileChooserAvatar.addEventListener('change',onAvatarChange);
 
 headerInput.addEventListener('input', onHeaderInput);
 priceNight.addEventListener('input', onPriceNightInput);
@@ -96,3 +119,6 @@ rooms.addEventListener('change', onRoomsChange);
 typeHousing.addEventListener('change', onTypeHousingChange);
 
 timeIn.addEventListener('change',onTimeInChange);
+timeOut.addEventListener('change',onTimetimeOutChange);
+
+export {previewAvatar, previewPhoto};

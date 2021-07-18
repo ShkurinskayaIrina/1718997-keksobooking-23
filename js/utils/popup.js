@@ -6,9 +6,9 @@ const TYPE_OFFER = {
   hotel : 'Отель',
 };
 
-const setAvailability = function(element , block){
+const setAvailability = function (element , block) {
   if (!element){
-     return block.classList.add('hidden');
+    return block.classList.add('hidden');
   }
   if (block.textContent){
     return block.textContent = element;
@@ -17,14 +17,16 @@ const setAvailability = function(element , block){
   return block.src = element;
 };
 
-const setFeatures = function(elements , block){
+const setFeatures = function (elements , block) {
   block.forEach((item)=>{
     const modifier = item.classList[1];
-    if (!elements.includes(modifier)){item.remove();}
+    if (!elements.includes(modifier)){
+      item.remove();
+    }
   });
 };
 
-const setPhoto = function(elements , block, blockPresent){
+const setPhoto = function (elements , block, blockPresent) {
   elements.forEach((value , index)=> {
     let photoNew = '';
     index>0 ? photoNew = document.createElement('img') : photoNew = blockPresent;
@@ -36,7 +38,7 @@ const setPhoto = function(elements , block, blockPresent){
   });
 };
 
-const createPopup = function(advertisement){
+const createPopup = function (advertisement) {
   const advertisementTemplate = document.querySelector('#card').content.querySelector('.popup');
   const advertisementElement = advertisementTemplate.cloneNode(true);
   const avatar = advertisement.author.avatar;
@@ -85,7 +87,6 @@ const createPopup = function(advertisement){
   setAvailability(capacity , popupTextCapacity);
   setAvailability(textTime , popupTextTime);
   setAvailability(description , popupDescription);
-
 
   let  modifiersFeatures='';
   if (advertisement.offer.features){
